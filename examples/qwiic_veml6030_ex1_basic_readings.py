@@ -57,7 +57,7 @@ def runExample():
 		# Give some delay between prints
 		time.sleep(1)
 
-		# Get light measured by sensor in Lux
+		# Get light measured by sensor in lux
 		ambient_light = light_sensor.read_light()
 
 		# Print measurement

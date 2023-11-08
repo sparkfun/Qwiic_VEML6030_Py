@@ -475,7 +475,7 @@ class QwiicVEML6030(object):
         :param lux_val: Low threshold in lux
         :type lux_val: float
         """
-        # Threshold cannot exceed 120kLux
+        # Threshold cannot exceed 120k lux
         if lux_val < 0 or lux_val > 120000:
             return
         
@@ -502,7 +502,7 @@ class QwiicVEML6030(object):
         :param lux_val: High threshold in lux
         :type lux_val: float
         """
-        # Threshold cannot exceed 120kLux
+        # Threshold cannot exceed 120k lux
         if lux_val < 0 or lux_val > 120000:
             return
         
@@ -533,7 +533,7 @@ class QwiicVEML6030(object):
         light_bits = self._read_register(self.VEML6030_AMBIENT_LIGHT_DATA_REG)
         lux_val = self._calculate_lux(light_bits)
 
-        # If > 1kLux, run compensation algorithm
+        # If > 1k lux, run compensation algorithm
         if lux_val > 1000:
             comp_lux = self._lux_compensation(lux_val)
             return comp_lux
@@ -551,7 +551,7 @@ class QwiicVEML6030(object):
         light_bits = self._read_register(self.VEML6030_WHITE_LIGHT_DATA_REG)
         lux_val = self._calculate_lux(light_bits)
 
-        # If > 1kLux, run compensation algorithm
+        # If > 1k lux, run compensation algorithm
         if lux_val > 1000:
             comp_lux = self._lux_compensation(lux_val)
             return comp_lux
