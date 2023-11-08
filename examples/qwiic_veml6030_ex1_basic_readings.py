@@ -54,14 +54,14 @@ def runExample():
 
 	# Loop forever
 	while True:
+		# Give some delay between prints
+		time.sleep(1)
+
 		# Get light measured by sensor in Lux
 		ambient_light = light_sensor.read_light()
 
 		# Print measurement
 		print("Lux:\t%.3f" % ambient_light)
-		
-		# Give some delay between prints
-		time.sleep(1)
 
 if __name__ == '__main__':
 	try:
