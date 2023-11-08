@@ -240,7 +240,8 @@ class QwiicVEML6030(object):
         """
         Sets the integration time
         
-        :param time: Integration time, ms
+        :param time: Integration time in ms, possible values:
+            25, 50, 100, 200, 400, and 800
         :type time: int
         """
         # Determine integration time bits
