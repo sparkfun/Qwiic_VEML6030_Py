@@ -1,22 +1,18 @@
 #!/usr/bin/env python
-#-----------------------------------------------------------------------------
-# qwiic_env_bme280_ex1.py
+#-------------------------------------------------------------------------------
+# qwiic_veml6030_ex1_basic_readings.py
 #
-# Simple Example for the Qwiic BME280 Device
-#------------------------------------------------------------------------
+# Demonstrates how to get basic data from the Qwiic Ambient Light Sensor
+#-------------------------------------------------------------------------------
+# Written by SparkFun Electronics, November 2023
 #
-# Written by  SparkFun Electronics, May 2019
-# 
-# This python library supports the SparkFun Electroncis qwiic 
-# qwiic sensor/board ecosystem on a Raspberry Pi (and compatable) single
-# board computers. 
+# This python library supports the SparkFun Electroncis Qwiic ecosystem
 #
-# More information on qwiic is at https://www.sparkfun.com/qwiic
+# More information on Qwiic is at https://www.sparkfun.com/qwiic
 #
 # Do you like this library? Help support SparkFun. Buy a board!
-#
-#==================================================================================
-# Copyright (c) 2019 SparkFun Electronics
+#===============================================================================
+# Copyright (c) 2023 SparkFun Electronics
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy 
 # of this software and associated documentation files (the "Software"), to deal 
@@ -35,44 +31,41 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
-#==================================================================================
-# Example 1
-#
+#===============================================================================
 
-from __future__ import print_function
-import qwiic_bme280
+import qwiic_veml6030
 import time
 import sys
 
 def runExample():
+	print("\nQwiic Ambient Light Sensor Example 1 - Basic Readings\n")
 
-	print("\nSparkFun BME280 Sensor  Example 1\n")
-	mySensor = qwiic_bme280.QwiicBme280()
+	# Create instance of device
+	light_sensor = qwiic_veml6030.QwiicVEML6030()
 
-	if mySensor.connected == False:
-		print("The Qwiic BME280 device isn't connected to the system. Please check your connection", \
+	# Check if it's connected
+	if light_sensor.is_connected() == False:
+		print("The device isn't connected to the system. Please check your connection", \
 			file=sys.stderr)
 		return
 
-	mySensor.begin()
+	# Initialize the device
+	light_sensor.begin()
 
+	# Loop forever
 	while True:
-		print("Humidity:\t%.3f" % mySensor.humidity)
+		# Get light measured by sensor in Lux
+		ambient_light = light_sensor.read_light()
 
-		print("Pressure:\t%.3f" % mySensor.pressure)	
-
-		print("Altitude:\t%.3f" % mySensor.altitude_feet)
-
-		print("Temperature:\t%.2f" % mySensor.temperature_fahrenheit)		
-
-		print("")
+		# Print measurement
+		print("Lux:\t%.3f" % ambient_light)
 		
+		# Give some delay between prints
 		time.sleep(1)
-
 
 if __name__ == '__main__':
 	try:
 		runExample()
 	except (KeyboardInterrupt, SystemExit) as exErr:
-		print("\nEnding Example 1")
+		print("\nEnding Example")
 		sys.exit(0)
