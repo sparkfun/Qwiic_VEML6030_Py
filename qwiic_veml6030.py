@@ -1,10 +1,8 @@
 #-------------------------------------------------------------------------------
 # qwiic_veml6030.py
 #
-# Python library for the SparkFun Qwiic VEML6030 ambient light sensor.
-#
-# This sensor is available on the SparkFun storefront:
-# https://www.sparkfun.com/products/15436
+# Python library for the SparkFun Qwiic VEML6030 ambient light sensor, available
+# here: https://www.sparkfun.com/products/15436
 #-------------------------------------------------------------------------------
 # Written by SparkFun Electronics, November 2023
 #
@@ -43,35 +41,33 @@
 """
 qwiic_veml6030
 ============
-Python module for the [Qwiic VEML6030 sensor](https://www.sparkfun.com/products/15436)
-This python package is a port of the existing [SparkFun Ambient Light Sensor Arduino Library](https://github.com/sparkfun/SparkFun_Ambient_Light_Sensor_Arduino_Library)
+Python module for the [SparkFun Qwiic VEML6030 Ambient Light Sensor](https://www.sparkfun.com/products/15436)
+This is a port of the existing [Arduino Library](https://github.com/sparkfun/SparkFun_Ambient_Light_Sensor_Arduino_Library)
 This package can be used in conjunction with the overall [SparkFun Qwiic Python Package](https://github.com/sparkfun/Qwiic_Py)
 New to Qwiic? Take a look at the entire [SparkFun Qwiic ecosystem](https://www.sparkfun.com/qwiic).
 """
 
-#-----------------------------------------------------------------------------
-
+# The Qwiic_I2C_Py platform driver is designed to work on almost any Python
+# platform, check it out here: https://github.com/sparkfun/Qwiic_I2C_Py
 import qwiic_i2c
 import time
 
 # Define the device name and I2C addresses. These are set in the class defintion
-# as class variables, making them avilable without having to create a class instance.
-# This allows higher level logic to rapidly create a index of qwiic devices at
-# runtine
-#
-# The name of this device
+# as class variables, making them avilable without having to create a class
+# instance. This allows higher level logic to rapidly create a index of Qwiic
+# devices at runtine
 _DEFAULT_NAME = "Qwiic VEML6030"
 
-# Some devices have multiple availabel addresses - this is a list of these addresses.
-# NOTE: The first address in this list is considered the default I2C address for the
-# device.
+# Some devices have multiple available addresses - this is a list of these
+# addresses. NOTE: The first address in this list is considered the default I2C
+# address for the device.
 _AVAILABLE_I2C_ADDRESS = [0x48, 0x10]
 
-# define the class that encapsulates the device being created. All information associated with this
-# device is encapsulated by this class. The device class should be the only value exported
-# from this module.
+# Define the class that encapsulates the device being created. All information
+# associated with this device is encapsulated by this class. The device class
+# should be the only value exported from this module.
 class QwiicVEML6030(object):
-    # Name and I2C address(es)
+    # Set default name and I2C address(es)
     device_name         = _DEFAULT_NAME
     available_addresses = _AVAILABLE_I2C_ADDRESS
 
@@ -141,7 +137,7 @@ class QwiicVEML6030(object):
 
     def __init__(self, address=None, i2c_driver=None):
         """
-        QwiicVEML6030 constructor
+        Constructor
 
         :param address: The I2C address to use for the device
             If not provided, the default address is used
@@ -150,8 +146,9 @@ class QwiicVEML6030(object):
             If not provided, a driver object is created
         :type i2c_driver: I2CDriver, optional
         """
-        # Did the user specify an I2C address?
-        self._address = self.available_addresses[0] if address is None else address
+
+        # Use address if provided, otherwise pick the default
+        self.address = self.available_addresses[0] if address is None else address
 
         # Load the I2C driver if one isn't provided
         if i2c_driver is None:
@@ -164,23 +161,24 @@ class QwiicVEML6030(object):
 
     def is_connected(self):
         """
-        Determines if the device is connected
+        Determines if this device is connected
 
-        :return: `True` if the device is connected, otherwise `False`
+        :return: `True` if connected, otherwise `False`
         :rtype: bool
         """
-        return qwiic_i2c.isDeviceConnected(self._address)
+        # Check if connected by seeing if an ACK is received
+        return qwiic_i2c.isDeviceConnected(self.address)
 
     connected = property(is_connected)
 
     def begin(self):
         """
-        Initializes the operation of the VEML6030 module
+        Initializes this device with default parameters
 
         :return: Returns `True` if successful, otherwise `False`
         :rtype: bool
         """
-        # Check if we're connected
+        # Confirm device is connected before doing anything
         if not self.is_connected():
             return False
         
@@ -688,7 +686,7 @@ class QwiicVEML6030(object):
         i2c_write |= bits << start_position
 
         # Write new value back to register
-        self._i2c.writeWord(self._address, w_reg, i2c_write)
+        self._i2c.writeWord(self.address, w_reg, i2c_write)
 
     def _read_register(self, reg):
         """
@@ -699,4 +697,4 @@ class QwiicVEML6030(object):
         :return: Register value
         :rtype: int
         """
-        return self._i2c.readWord(self._address, reg)
+        return self._i2c.readWord(self.address, reg)
