@@ -86,13 +86,6 @@ def runExample():
 		# Print measurement
 		print("Lux:\t%.1f" % ambient_light)
 
-		# Check whether an interrupt has occurred
-		interrupt = light_sensor.read_interrupt()
-		if interrupt == light_sensor.VEML6030_INT_HIGH:
-			print("High threshold crossed!")
-		elif interrupt == light_sensor.VEML6030_INT_LOW:
-			print("Low threshold crossed!")
-
 if __name__ == '__main__':
 	try:
 		runExample()
