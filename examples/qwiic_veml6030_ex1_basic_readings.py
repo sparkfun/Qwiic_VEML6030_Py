@@ -61,7 +61,7 @@ def runExample():
 		ambient_light = light_sensor.read_light()
 
 		# Print measurement
-		print("Lux:\t%.3f" % ambient_light)
+		print("Lux:\t%.1f" % ambient_light)
 
 if __name__ == '__main__':
 	try:

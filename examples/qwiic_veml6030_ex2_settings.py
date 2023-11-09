@@ -52,14 +52,14 @@ def runExample():
 	# Initialize the device
 	light_sensor.begin()
 
-	# Set the gain. Can be any of the following:
+	# Set the gain, can be any of the following:
 	# 1/8, 1/4, 1, and 2
-	gain = 0.125
+	gain = 1
 	light_sensor.set_gain(gain)
 
-	# Set the integration time in ms. Can be any of the following:
+	# Set the integration time in ms, can be any of the following:
 	# 25, 50, 100, 200, 400, and 800
-	integ_time = 100
+	integ_time = 200
 	light_sensor.set_integ_time(integ_time)
 
 	# Read back the settings and print to confirm they were set correctly
@@ -73,14 +73,14 @@ def runExample():
 
 	# Loop forever
 	while True:
-		# Give some delay between prints
-		time.sleep(1)
+		# Wait for 1 integration time period to synchronize measurements
+		time.sleep(integ_time / 1000)
 
 		# Get light measured by sensor in lux
 		ambient_light = light_sensor.read_light()
 
 		# Print measurement
-		print("Lux:\t%.3f" % ambient_light)
+		print("Lux:\t%.1f" % ambient_light)
 
 if __name__ == '__main__':
 	try:
