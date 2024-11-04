@@ -320,7 +320,7 @@ class QwiicVEML6030(object):
         """
         Gets the persistence protect number
 
-        :return: Protect number
+        :return: Protect number (or VEML6030_UNKOWN_ERROR on error)
         :rtype: int
         """
         # Read the protect number bits
@@ -428,7 +428,7 @@ class QwiicVEML6030(object):
         """
         Gets the power saving mode. See datasheet for the effects of each value
 
-        :return: Power saving mode number, can be 1-4
+        :return: Power saving mode number, can be 1-4 (or VEML6030_UNKOWN_ERROR on error)
         :rtype: int
         """
         # Read the power saving mode bits
@@ -453,7 +453,7 @@ class QwiicVEML6030(object):
         Gets whether an interrupt has triggered
 
         :return: Interrupt, can be the following:
-            VEML6030_NO_INT, VEML6030_INT_HIGH, or VEML6030_INT_LOW
+            VEML6030_NO_INT, VEML6030_INT_HIGH, or VEML6030_INT_LOW (or VEML6030_UNKOWN_ERROR on error)
         :rtype: int
         """
         # Read the interrupt bits
@@ -488,7 +488,7 @@ class QwiicVEML6030(object):
 
     def read_low_thresh(self):
         """
-        Sets the low threshold for interrupts
+        Gets the low threshold for interrupts
 
         :return: Low threshold in lux
         :rtype: float
@@ -515,7 +515,7 @@ class QwiicVEML6030(object):
 
     def read_high_thresh(self):
         """
-        Sets the high threshold for interrupts
+        Gets the high threshold for interrupts
 
         :return: High threshold in lux
         :rtype: float
@@ -585,7 +585,7 @@ class QwiicVEML6030(object):
 
         :param light_bits: Raw bits
         :type light_bits: int
-        :return: Lux value
+        :return: Lux value (or VEML6030_UNKOWN_ERROR on error)
         :rtype: float
         """
         # Need to know the gain and integration time so we can adjust for them
@@ -630,7 +630,7 @@ class QwiicVEML6030(object):
 
         :param lux_val: Lux value
         :type lux_val: float
-        :return: Raw bits
+        :return: Raw bits (or VEML6030_UNKOWN_ERROR on error)
         :rtype: int
         """
         # Need to know the gain and integration time so we can adjust for them
