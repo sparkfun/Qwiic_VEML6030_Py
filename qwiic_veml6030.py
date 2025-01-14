@@ -38,7 +38,7 @@
 # Dryw Wade
 #===============================================================================
 
-"""
+"""!
 qwiic_veml6030
 ============
 Python module for the [SparkFun Qwiic VEML6030 Ambient Light Sensor](https://www.sparkfun.com/products/15436)
@@ -136,15 +136,13 @@ class QwiicVEML6030(object):
     VEML6030_INTEG_TIME_25 = 25
 
     def __init__(self, address=None, i2c_driver=None):
-        """
+        """!
         Constructor
 
-        :param address: The I2C address to use for the device
+        @param int, optional address: The I2C address to use for the device
             If not provided, the default address is used
-        :type address: int, optional
-        :param i2c_driver: An existing i2c driver object
+        @param I2CDriver, optional i2c_driver: An existing i2c driver object
             If not provided, a driver object is created
-        :type i2c_driver: I2CDriver, optional
         """
 
         # Use address if provided, otherwise pick the default
@@ -163,11 +161,10 @@ class QwiicVEML6030(object):
             self._i2c = i2c_driver
 
     def is_connected(self):
-        """
+        """!
         Determines if this device is connected
 
-        :return: `True` if connected, otherwise `False`
-        :rtype: bool
+        @return **bool** `True` if connected, otherwise `False`
         """
         # Check if connected by seeing if an ACK is received
         return self._i2c.isDeviceConnected(self.address)
@@ -175,11 +172,10 @@ class QwiicVEML6030(object):
     connected = property(is_connected)
 
     def begin(self):
-        """
+        """!
         Initializes this device with default parameters
 
-        :return: Returns `True` if successful, otherwise `False`
-        :rtype: bool
+        @return **bool** Returns `True` if successful, otherwise `False`
         """
         # Confirm device is connected before doing anything
         if not self.is_connected():
@@ -192,10 +188,10 @@ class QwiicVEML6030(object):
         return True
 
     def set_gain(self, gain_val):
-        """
+        """!
         Sets the gain
-        
-        :param gain_val: Gain, possible values:
+
+        @param gain_val: Gain, possible values:
             1/8, 1/4, 1, and 2
         :type: float
         """
@@ -215,12 +211,11 @@ class QwiicVEML6030(object):
         self._write_register(self.VEML6030_SETTING_REG, self.VEML6030_GAIN_MASK, gain_bits, self.VEML6030_GAIN_POS)
 
     def read_gain(self):
-        """
+        """!
         Gets the gain
 
-        :return: Gain, possible values:
+        @return **float** Gain, possible values:
             1/8, 1/4, 1, and 2
-        :rtype: float
         """
         # Read the gain bits
         gain_bits = self._read_register(self.VEML6030_SETTING_REG)
@@ -240,12 +235,11 @@ class QwiicVEML6030(object):
             return self.VEML6030_UNKNOWN_ERROR
 
     def set_integ_time(self, time):
-        """
+        """!
         Sets the integration time
-        
-        :param time: Integration time in ms, possible values:
+
+        @param int time: Integration time in ms, possible values:
             25, 50, 100, 200, 400, and 800
-        :type time: int
         """
         # Determine integration time bits
         if time == self.VEML6030_INTEG_TIME_100:
@@ -267,11 +261,10 @@ class QwiicVEML6030(object):
         self._write_register(self.VEML6030_SETTING_REG, self.VEML6030_INTEG_MASK, time_bits, self.VEML6030_INTEG_POS)
 
     def read_integ_time(self):
-        """
+        """!
         Gets the integration time
 
-        :return: Integration time, ms
-        :rtype: int
+        @return **int** Integration time, ms
         """
         # Read the integration time bits
         time_bits = self._read_register(self.VEML6030_SETTING_REG)
@@ -295,11 +288,10 @@ class QwiicVEML6030(object):
             return self.VEML6030_UNKNOWN_ERROR
 
     def set_protect(self, prot_val):
-        """
+        """!
         Sets the persistence protect number
 
-        :param prot_val: Protect number
-        :type prot_val: int
+        @param int prot_val: Protect number
         """
         # Determine protect number bits
         if prot_val == 1:
@@ -317,11 +309,10 @@ class QwiicVEML6030(object):
         self._write_register(self.VEML6030_SETTING_REG, self.VEML6030_PERS_PROT_MASK, prot_bits, self.VEML6030_PERS_PROT_POS)
 
     def read_protect(self):
-        """
+        """!
         Gets the persistence protect number
 
-        :return: Protect number (or VEML6030_UNKOWN_ERROR on error)
-        :rtype: int
+        @return **int** Protect number (or VEML6030_UNKOWN_ERROR on error)
         """
         # Read the protect number bits
         prot_bits = self._read_register(self.VEML6030_SETTING_REG)
@@ -341,23 +332,22 @@ class QwiicVEML6030(object):
             return self.VEML6030_UNKNOWN_ERROR
 
     def enable_int(self):
-        """
+        """!
         Enables interrupts
         """
         self._write_register(self.VEML6030_SETTING_REG, self.VEML6030_INT_EN_MASK, self.VEML6030_ENABLE, self.VEML6030_INT_EN_POS)
 
     def disable_int(self):
-        """
+        """!
         Disables interrupts
         """
         self._write_register(self.VEML6030_SETTING_REG, self.VEML6030_INT_EN_MASK, self.VEML6030_DISABLE, self.VEML6030_INT_EN_POS)
 
     def read_int_setting(self):
-        """
+        """!
         Gets whether interrupts are enabled
 
-        :return: `True` if interrupts are enabled, otherwise `False`
-        :rtype: bool
+        @return **bool** `True` if interrupts are enabled, otherwise `False`
         """
         # Get interrupt bits
         int_setting = self._read_register(self.VEML6030_SETTING_REG)
@@ -366,13 +356,13 @@ class QwiicVEML6030(object):
         return bool(int_setting)
 
     def shut_down(self):
-        """
+        """!
         Shuts down the device
         """
         self._write_register(self.VEML6030_SETTING_REG, self.VEML6030_SD_MASK, self.VEML6030_SHUTDOWN, self.VEML6030_NO_SHIFT)
 
     def power_on(self):
-        """
+        """!
         Powers on the device
         """
         self._write_register(self.VEML6030_SETTING_REG, self.VEML6030_SD_MASK, self.VEML6030_POWER, self.VEML6030_NO_SHIFT)
@@ -380,34 +370,32 @@ class QwiicVEML6030(object):
         time.sleep(0.004)
 
     def enable_pow_save(self):
-        """
+        """!
         Enables power saving mode
         """
         self._write_register(self.VEML6030_POWER_SAVE_REG, self.VEML6030_POW_SAVE_EN_MASK, self.VEML6030_ENABLE, self.VEML6030_NO_SHIFT)
 
     def disable_pow_save(self):
-        """
+        """!
         Disables power saving mode
         """
         self._write_register(self.VEML6030_POWER_SAVE_REG, self.VEML6030_POW_SAVE_EN_MASK, self.VEML6030_DISABLE, self.VEML6030_NO_SHIFT)
 
     def read_pow_sav_enabled(self):
-        """
+        """!
         Gets whether power saving is enabled
 
-        :return: `True` if power saving is enabled, otherwise `False`
-        :rtype: bool
+        @return **bool** `True` if power saving is enabled, otherwise `False`
         """
         pow_sav_enabled = self._read_register(self.VEML6030_POWER_SAVE_REG)
         pow_sav_enabled &= ~self.VEML6030_POW_SAVE_EN_MASK
         return bool(pow_sav_enabled)
 
     def set_pow_sav_mode(self, mode_val):
-        """
+        """!
         Sets the power saving mode. See datasheet for the effects of each value
 
-        :param mode_val: Power saving mode number, can be 1-4
-        :type mode_val: int
+        @param int mode_val: Power saving mode number, can be 1-4
         """
         # Determine power saving mode bits
         if mode_val == 1:
@@ -425,11 +413,10 @@ class QwiicVEML6030(object):
         self._write_register(self.VEML6030_POWER_SAVE_REG, self.VEML6030_POW_SAVE_MASK, mode_bits, self.VEML6030_PSM_POS)
 
     def read_pow_sav_mode(self):
-        """
+        """!
         Gets the power saving mode. See datasheet for the effects of each value
 
-        :return: Power saving mode number, can be 1-4 (or VEML6030_UNKOWN_ERROR on error)
-        :rtype: int
+        @return **int** Power saving mode number, can be 1-4 (or VEML6030_UNKOWN_ERROR on error)
         """
         # Read the power saving mode bits
         mode_bits = self._read_register(self.VEML6030_POWER_SAVE_REG)
@@ -449,12 +436,11 @@ class QwiicVEML6030(object):
             return self.VEML6030_UNKNOWN_ERROR
 
     def read_interrupt(self):
-        """
+        """!
         Gets whether an interrupt has triggered
 
-        :return: Interrupt, can be the following:
+        @return **int** Interrupt, can be the following:
             VEML6030_NO_INT, VEML6030_INT_HIGH, or VEML6030_INT_LOW (or VEML6030_UNKOWN_ERROR on error)
-        :rtype: int
         """
         # Read the interrupt bits
         interrupt = self._read_register(self.VEML6030_INTERRUPT_REG)
@@ -472,11 +458,10 @@ class QwiicVEML6030(object):
             return self.VEML6030_UNKNOWN_ERROR
 
     def set_int_low_thresh(self, lux_val):
-        """
+        """!
         Sets the low threshold for interrupts
 
-        :param lux_val: Low threshold in lux
-        :type lux_val: float
+        @param float lux_val: Low threshold in lux
         """
         # Threshold cannot exceed 120k lux
         if lux_val < 0 or lux_val > 120000:
@@ -487,11 +472,10 @@ class QwiicVEML6030(object):
         self._write_register(self.VEML6030_L_THRESH_REG, self.VEML6030_THRESH_MASK, bits, self.VEML6030_NO_SHIFT)
 
     def read_low_thresh(self):
-        """
+        """!
         Gets the low threshold for interrupts
 
-        :return: Low threshold in lux
-        :rtype: float
+        @return **float** Low threshold in lux
         """
         # Read bits and convert to lux
         bits = self._read_register(self.VEML6030_L_THRESH_REG)
@@ -499,11 +483,10 @@ class QwiicVEML6030(object):
         return lux_val
 
     def set_int_high_thresh(self, lux_val):
-        """
+        """!
         Sets the high threshold for interrupts
 
-        :param lux_val: High threshold in lux
-        :type lux_val: float
+        @param float lux_val: High threshold in lux
         """
         # Threshold cannot exceed 120k lux
         if lux_val < 0 or lux_val > 120000:
@@ -514,11 +497,10 @@ class QwiicVEML6030(object):
         self._write_register(self.VEML6030_H_THRESH_REG, self.VEML6030_THRESH_MASK, bits, self.VEML6030_NO_SHIFT)
 
     def read_high_thresh(self):
-        """
+        """!
         Gets the high threshold for interrupts
 
-        :return: High threshold in lux
-        :rtype: float
+        @return **float** High threshold in lux
         """
         # Read bits and convert to lux
         bits = self._read_register(self.VEML6030_H_THRESH_REG)
@@ -526,11 +508,10 @@ class QwiicVEML6030(object):
         return lux_val
 
     def read_light(self):
-        """
+        """!
         Gets the measured ambient light in lux
 
-        :return: Measure ambient light in lux
-        :rtype: float
+        @return **float** Measure ambient light in lux
         """
         # Read bits and convert to lux
         light_bits = self._read_register(self.VEML6030_AMBIENT_LIGHT_DATA_REG)
@@ -544,11 +525,10 @@ class QwiicVEML6030(object):
             return lux_val
 
     def read_white_light(self):
-        """
+        """!
         Gets the measured white light in lux
 
-        :return: Measure white light in lux
-        :rtype: float
+        @return **float** Measure white light in lux
         """
         # Read bits and convert to lux
         light_bits = self._read_register(self.VEML6030_WHITE_LIGHT_DATA_REG)
@@ -562,13 +542,12 @@ class QwiicVEML6030(object):
             return lux_val
 
     def _lux_compensation(self, lux_val):
-        """
+        """!
         Compensates lux values over 1000
 
-        :param lux_val: Lux value
-        :type lux_val: float
-        :return: Compensated lux value
-        :rtype: float
+        @param float lux_val: Lux value
+
+        @return **float** Compensated lux value
         """
         # Found in page 10 of datasheet
         comp_lux = (
@@ -580,13 +559,12 @@ class QwiicVEML6030(object):
         return comp_lux
 
     def _calculate_lux(self, light_bits):
-        """
+        """!
         Calculates lux value from raw bits
 
-        :param light_bits: Raw bits
-        :type light_bits: int
-        :return: Lux value (or VEML6030_UNKOWN_ERROR on error)
-        :rtype: float
+        @param int light_bits: Raw bits
+
+        @return **float** Lux value (or VEML6030_UNKOWN_ERROR on error)
         """
         # Need to know the gain and integration time so we can adjust for them
         gain = self.read_gain()
@@ -625,13 +603,12 @@ class QwiicVEML6030(object):
         return calculated_lux
 
     def _calculate_bits(self, lux_val):
-        """
+        """!
         Calculates raw bits from lux value
 
-        :param lux_val: Lux value
-        :type lux_val: float
-        :return: Raw bits (or VEML6030_UNKOWN_ERROR on error)
-        :rtype: int
+        @param float lux_val: Lux value
+
+        @return **int** Raw bits (or VEML6030_UNKOWN_ERROR on error)
         """
         # Need to know the gain and integration time so we can adjust for them
         gain = self.read_gain()
@@ -670,17 +647,13 @@ class QwiicVEML6030(object):
         return calculated_bits
 
     def _write_register(self, w_reg, mask, bits, start_position):
-        """
+        """!
         Writes specific bits to a register
 
-        :param w_reg: Register address
-        :type w_reg: int
-        :param mask: Bit mask
-        :type mask: int
-        :param bits: Bits to write
-        :type bits: int
-        :param start_position: Offset position
-        :type start_position: int
+        @param int w_reg: Register address
+        @param int mask: Bit mask
+        @param int bits: Bits to write
+        @param int start_position: Offset position
         """
         # Read current register value
         i2c_write = self._read_register(w_reg)
@@ -693,12 +666,11 @@ class QwiicVEML6030(object):
         self._i2c.writeWord(self.address, w_reg, i2c_write)
 
     def _read_register(self, reg):
-        """
+        """!
         Reads a register
 
-        :param reg: Register address
-        :type reg: int
-        :return: Register value
-        :rtype: int
+        @param int reg: Register address
+
+        @return **int** Register value
         """
         return self._i2c.readWord(self.address, reg)
