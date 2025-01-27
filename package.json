@@ -1,9 +1,9 @@
 {
     "urls": [
-      ["qwiic_veml6030.py", "github:sparkfun/Qwiic_VEML6030_Py/qwiic_veml6030.py"]
-    ],
-    "deps": [
-      ["github:sparkfun/Qwiic_I2C_Py", "master"]
+      ["qwiic_veml6030_py_examples/qwiic_veml6030_ex1_basic_readings.py", "github:sparkfun/qwiic_veml6030_py/examples/qwiic_veml6030_ex1_basic_readings.py"],
+      ["qwiic_veml6030_py_examples/qwiic_veml6030_ex2_settings.py", "github:sparkfun/qwiic_veml6030_py/examples/qwiic_veml6030_ex2_settings.py"],
+      ["qwiic_veml6030_py_examples/qwiic_veml6030_ex3_threshold_interrupts.py", "github:sparkfun/qwiic_veml6030_py/examples/qwiic_veml6030_ex3_threshold_interrupts.py"],
+      ["qwiic_veml6030_py_examples/qwiic_veml6030_ex4_power_saving.py", "github:sparkfun/qwiic_veml6030_py/examples/qwiic_veml6030_ex4_power_saving.py"]
     ],
     "version": "0.0.1"
 }
